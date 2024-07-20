@@ -1,17 +1,44 @@
 <b>Content</b>
 
-<div id='testnumber_1'>5</div>
+<div id='winmessage'></div>
+
+<div curval=5 targetval=20 right=false id='ring_1'>5</div>
+<div id='targetnumber_1'>20</div>
 <br/>
-<div id='testnumber_2'>7</div>
+<div curval=8 targetval=12 right=false id='ring_2'>7</div>
+<div id='targetnumber_2'>12</div>
 
 
 <script>
 
 function clamp(element) {
     element.innerHTML = parseInt(element.innerHTML);
+    element.setAttribute('curval', parseInt(element.innerHTML));
+}
+function check(element) {
+    let target = element.getAttribute('targetval');
+    let curval = element.getAttribute('curval');
+//    let target = parseInt(document.getElementById('targetnumber_' + element.id.split('_')[1]).innerHTML);
+    if(curval === target) {
+        element.style.color = 'green';
+        element.setAttribute('right',true);
+    } else {
+        element.style.color = 'black';
+        element.setAttribute('right',false);
+    }
+}
+function checkAll() {
+    let isWin = true;
+    for(var i = 1; i<=activeRings; i++) {
+        isWin = isWin && ('true' === document.getElementById('ring_' + i).getAttribute('right'));
+    }
+    if(isWin) {
+        document.getElementById('winmessage').innerHTML = "You win!";
+    } 
 }
 
 function slide(event) {
+    //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
     let newVal = parseInt(event.target.innerHTML) + event.deltaY * rate;
     event.target.innerHTML = newVal;
@@ -22,11 +49,17 @@ function slide(event) {
     }
     let timeoutId = setTimeout(function() {
         clamp(event.target);
+        check(event.target);
+        event.target.setAttribute('clampTimeoutId', '');
+        checkAll();
     }, 1000);
     event.target.setAttribute('clampTimeoutId', timeoutId);
 }
-let rate = 0.01;
 
-document.getElementById('testnumber_1').onwheel = slide;
-document.getElementById('testnumber_2').onwheel = slide;
+
+let rate = 0.01;
+let activeRings = 2;
+
+document.getElementById('ring_1').onwheel = slide;
+document.getElementById('ring_2').onwheel = slide;
 </script>

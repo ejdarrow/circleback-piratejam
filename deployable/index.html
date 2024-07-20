@@ -1,0 +1,32 @@
+<b>Content</b>
+
+<div id='testnumber_1'>5</div>
+<br/>
+<div id='testnumber_2'>7</div>
+
+
+<script>
+
+function clamp(element) {
+    element.innerHTML = parseInt(element.innerHTML);
+}
+
+function slide(event) {
+    event.preventDefault();
+    let newVal = parseInt(event.target.innerHTML) + event.deltaY * rate;
+    event.target.innerHTML = newVal;
+    
+    var currentTimeoutId = event.target.getAttribute('clampTimeoutId');
+    if(currentTimeoutId) {
+        clearTimeout(currentTimeoutId);
+    }
+    let timeoutId = setTimeout(function() {
+        clamp(event.target);
+    }, 1000);
+    event.target.setAttribute('clampTimeoutId', timeoutId);
+}
+let rate = 0.01;
+
+document.getElementById('testnumber_1').onwheel = slide;
+document.getElementById('testnumber_2').onwheel = slide;
+</script>

@@ -1,31 +1,70 @@
+<html>
+<head>
+<style> 
+.container {
+    height: 300;
+    width: 300;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -150px;
+}
+.ringedge { /* background-color: black; */
+    background-color: white;
+    border-radius: 50%;
+    height: 95%;
+    width: 95%;
+    align:center;
+    position:relative;
+}
+.ring {
+    background-color: black;
+    border-radius: 50%;
+    height: 95%;
+    width:95%;
+    align:center;
+    position:relative;
+
+}
+</style>
+
+
+</head>
+<body>
+
 <b>Content</b>
 
 <div id='winmessage'></div>
-
-<div curval=5 targetval=20 right=false id='ring_1'>5</div>
-<div id='targetnumber_1'>20</div>
+<div class="container">
+<div class="ring" curval=1 targetval=5 right=false ringnumber='1' id='ring_1'>
+<div class="ringedge">
+</div>
+</div>
+<div id='target'>5,7,9</div>
+<div id='statedisplay_1'></div>
 <br/>
-<div curval=8 targetval=12 right=false id='ring_2'>7</div>
-<div id='targetnumber_2'>12</div>
 
-
+<div class=ring curval=1 targetval=7 right=false ringnumber='2' id='ring_2'>7</div>
+</div>
 <script>
 
 function clamp(element) {
-    element.innerHTML = parseInt(element.innerHTML);
-    element.setAttribute('curval', parseInt(element.innerHTML));
+    element.setAttribute('curval', parseInt(element.getAttribute('curval')));
+    document.getElementById('statedisplay_' +element.getAttribute('ringnumber')).innerHTML = element.getAttribute('curval');
 }
 function check(element) {
     let target = element.getAttribute('targetval');
     let curval = element.getAttribute('curval');
-//    let target = parseInt(document.getElementById('targetnumber_' + element.id.split('_')[1]).innerHTML);
     if(curval === target) {
         element.style.color = 'green';
+        element.style.backgroundColor = 'green';
         element.setAttribute('right',true);
     } else {
         element.style.color = 'black';
+        element.style.backgroundColor = 'black';
         element.setAttribute('right',false);
     }
+
 }
 function checkAll() {
     let isWin = true;
@@ -40,8 +79,8 @@ function checkAll() {
 function slide(event) {
     //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
-    let newVal = parseInt(event.target.innerHTML) + event.deltaY * rate;
-    event.target.innerHTML = newVal;
+    let newVal = parseInt(event.target.getAttribute('curval')) + event.deltaY * rate;
+    event.target.setAttribute('curval', newVal);
     
     var currentTimeoutId = event.target.getAttribute('clampTimeoutId');
     if(currentTimeoutId) {
@@ -63,3 +102,5 @@ let activeRings = 2;
 document.getElementById('ring_1').onwheel = slide;
 document.getElementById('ring_2').onwheel = slide;
 </script>
+</body>
+</html>

@@ -1,29 +1,53 @@
 <html>
 <head>
 <style> 
-.container {
-    height: 300;
-    width: 300;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -150px 0 0 -150px;
+:root {
+    --gold: #FFD700;
+    --blood: #880808;
+    --wood: #867342;
+    --marble: #FFFCF0;
+    --ebony: #555D50;
+    --container-height: 600px;
+    --container-width: 600px;
+    --radial-difference: 20px;
+    --radial-difference-half: calc(var(--radial-difference) / 2);
 }
-.ringedge { /* background-color: black; */
-    background-color: white;
+
+.container {
+    height: var(--container-height);
+    width: var(--container-width);
+    position: absolute;
+}
+.ring-inner { /* background-color: black; */
+    background-color: var(--gold);
     border-radius: 50%;
-    height: 95%;
-    width: 95%;
-    align:center;
-    position:relative;
+    position: relative;
+    margin: var(--radial-difference-half); 
 }
 .ring {
-    background-color: black;
+    background-color: var(--ebony);
     border-radius: 50%;
-    height: 95%;
-    width:95%;
-    align:center;
-    position:relative;
+    position: absolute;
+    margin: var(--radial-difference-half);
+}
+.ring-one {
+    height: calc(var(--container-height) - var(--radial-difference));
+    width: calc(var(--container-width) - var(--radial-difference));
+}
+
+.ring-inner-one {
+    height: calc(var(--container-height) - calc( 2 * var(--radial-difference)));
+    width: calc(var(--container-width) - calc( 2 * var(--radial-difference)));
+}
+.ring-two {
+    height: calc(var(--container-height) - calc( 3 * var(--radial-difference)));
+    width:  calc(var(--container-width) - calc( 3 * var(--radial-difference)));
+
+}
+.ring-inner-two {
+    height:  calc(var(--container-height) - calc( 4 * var(--radial-difference)));
+
+    width:  calc(var(--container-height) - calc( 4 * var(--radial-difference)));
 
 }
 </style>
@@ -36,15 +60,18 @@
 
 <div id='winmessage'></div>
 <div class="container">
-<div class="ring" curval=1 targetval=5 right=false ringnumber='1' id='ring_1'>
-<div class="ringedge">
+<div class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' id='ring_1'>
+<div class="ring-inner ring-inner-one">
+<div class="ring ring-two">
+<div class="ring-inner ring-inner-two">
+</div>
 </div>
 </div>
 <div id='target'>5,7,9</div>
 <div id='statedisplay_1'></div>
 <br/>
 
-<div class=ring curval=1 targetval=7 right=false ringnumber='2' id='ring_2'>7</div>
+<div class=ringnot curval=1 targetval=7 right=false ringnumber='2' id='ring_2'>7</div>
 </div>
 <script>
 

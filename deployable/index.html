@@ -9,7 +9,7 @@
     --ebony: #555D50;
     --container-height: 600px;
     --container-width: 600px;
-    --radial-difference: 20px;
+    --radial-difference: 50px;
     --radial-difference-half: calc(var(--radial-difference) / 2);
 }
 
@@ -46,10 +46,36 @@
 }
 .ring-inner-two {
     height:  calc(var(--container-height) - calc( 4 * var(--radial-difference)));
-
     width:  calc(var(--container-height) - calc( 4 * var(--radial-difference)));
+}
+.ring-three {
+    height: calc(var(--container-height) - calc( 5 * var(--radial-difference)));
+    width:  calc(var(--container-width) - calc( 5 * var(--radial-difference)));
 
 }
+.ring-inner-three {
+    height:  calc(var(--container-height) - calc( 6 * var(--radial-difference)));
+    width:  calc(var(--container-height) - calc( 6 * var(--radial-difference)));
+}
+.ring-four {
+    height: calc(var(--container-height) - calc( 7 * var(--radial-difference)));
+    width:  calc(var(--container-width) - calc( 7 * var(--radial-difference)));
+
+}
+.ring-inner-four {
+    height:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
+    width:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
+}
+.ring-five {
+    height: calc(var(--container-height) - calc( 9 * var(--radial-difference)));
+    width:  calc(var(--container-width) - calc( 9 * var(--radial-difference)));
+
+}
+.ring-inner-five {
+    height:  calc(var(--container-height) - calc( 10 * var(--radial-difference)));
+    width:  calc(var(--container-height) - calc( 10 * var(--radial-difference)));
+}
+
 </style>
 
 
@@ -61,9 +87,23 @@
 <div id='winmessage'></div>
 <div class="container">
 <div class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' id='ring_1'>
-<div class="ring-inner ring-inner-one">
-<div class="ring ring-two">
+<div class="ring-inner ring-inner-one" id='ring-inner_1'>
+<div class="ring ring-two" id='ring_2'>
 <div class="ring-inner ring-inner-two">
+<div class="ring ring-three">
+<div class="ring-inner ring-inner-three">
+<div class="ring ring-four">
+<div class="ring-inner ring-inner-four">
+<div class="ring ring-five">
+<div class="ring-inner ring-inner-five">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

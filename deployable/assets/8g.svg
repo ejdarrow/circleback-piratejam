@@ -2,20 +2,20 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
 <symbol id="curve" width="10" height="10" viewBox="0 0 10 10">
-<path d="M7,4 C0,7 7,0 4,7" fill="none" stroke-width="0.1px" stroke="grey" stroke-opacity="50%" />
+<!--path d="M7,4 S4.7,5 4.7,4.7 M4,7 S5,4.7 4.7,4.7" fill="none" stroke-width="0.1px" stroke="gold" /-->
+<path d="M7,4 C0,7 7,0 4,7" fill="none" stroke-width="0.1px" stroke="grey" stroke-opacity="60%" />
 </symbol>
-<symbol id="sigil" width="20" height="20" viewBox="0 0 9 9">
+<symbol id="sigil" width="20" height="20" viewBox="0 0 10 10">
 <use href="#curve" x="0" y="0" transform="scale(1.5)"/>
 </symbol>
 <circle fill="none" stroke-width="0.5px" stroke="black" cx="25" cy="25" r="24.75"/>
-<use href="#sigil" x="25" y="25" transform="scale(1.05)" />
-<use href="#sigil" x="25" y="25" transform="rotate(45 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(90 25 25) scale(1.05) "/>
-<use href="#sigil" x="25" y="25" transform="rotate(135 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(180 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(225 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(270 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(315 25 25) scale(1.05)"/>
- 
-</svg>
+<use href="#sigil" x="25" y="25" transform="scale(1.08)" />
+<use href="#sigil" x="25" y="25" transform="rotate(45 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(90 25 25) scale(1.08) "/>
+<use href="#sigil" x="25" y="25" transform="rotate(135 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(180 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(225 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(270 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(315 25 25) scale(1.08)"/>
 
+</svg>

@@ -3,27 +3,27 @@
 
 <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
 <symbol id="curve" width="10" height="10" viewBox="0 0 10 10">
-<path d="M7,4 C0,7 7,0 4,7" fill="none" stroke-width="0.1px" stroke="grey" stroke-opacity="50%" />
+<path d="M7,4 C0,7 7,0 4,7" fill="none" stroke-width="0.1px" stroke="grey" stroke-opacity="60%" />
 </symbol>
 <symbol id="sigil" width="20" height="20" viewBox="0 0 10 10">
 <use href="#curve" x="0" y="0" transform="scale(1.5)"/>
 </symbol>
 <circle fill="none" stroke-width="0.5px" stroke="black" cx="25" cy="25" r="24.75"/>
-<use href="#sigil" x="25" y="25" transform=" scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(24 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(48 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(72 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(96 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(120 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(144 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(168 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(192 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(216 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(240 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(264 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(288 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(312 25 25) scale(1.05)"/>
-<use href="#sigil" x="25" y="25" transform="rotate(336 25 25) scale(1.05)"/>
+<use href="#sigil" x="25" y="25" transform=" scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(24 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(48 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(72 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(96 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(120 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(144 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(168 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(192 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(216 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(240 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(264 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(288 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(312 25 25) scale(1.08)"/>
+<use href="#sigil" x="25" y="25" transform="rotate(336 25 25) scale(1.08)"/>
 
 
 

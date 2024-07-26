@@ -1,6 +1,6 @@
 <html>
 <head>
-<style> 
+<style>
 :root {
     --gold: #FFD700;
     --blood: #880808;
@@ -9,11 +9,21 @@
     --ebony: #555D50;
     --container-height: 1000px;
     --container-width: 1000px;
-    --radial-difference: 90px;
+    --radial-difference: 95px;
     --radial-difference-half: calc(var(--radial-difference) / 2);
     --top-base: 0px;
     --left-base: 0px;
 }
+.menu-container {
+    align-content: center;
+    background-color:white;
+        height: var(--container-height);
+        width: var(--container-width);
+        position: absolute;
+        top: var(--top-base);
+        left:var(--left-base);
+}
+
 
 .container {
     height: var(--container-height);
@@ -29,10 +39,10 @@
     margin: var(--radial-difference-half);
     top: var(--top-base);
     left: var(--left-base);
- 
+
 }
 .ring {
-    background-color: var(--ebony);
+    background-color: black;
     border-radius: 50%;
     position: absolute;
     margin: var(--radial-difference-half);
@@ -75,45 +85,41 @@
     height:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
     width:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
 }
-.ring-five {
-    height: calc(var(--container-height) - calc( 9 * var(--radial-difference)));
-    width:  calc(var(--container-width) - calc( 9 * var(--radial-difference)));
 
-}
-.ring-inner-five {
-    height:  calc(var(--container-height) - calc( 10 * var(--radial-difference)));
-    width:  calc(var(--container-height) - calc( 10 * var(--radial-difference)));
-}
 
 </style>
 
 
 </head>
-<body>
+<body style="background-color:gray;">
+<div id='menuHolder' class="menu-container">
+  <h1> Welcome to Circle Back</h1>
+  <button> Play </button>
+  <h3> How to Play </h3>
+</div>
 
+
+
+<div id='gameHolder' class="container" hidden>
 <b>Content</b>
+<div id='gamestate'></div>
 <div id='winmessage'></div>
-<div class="container">
-<div class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' id='ring_1'>
-<img src="assets/8.svg"/>
-<div class="ring-inner ring-inner-one" id='ring-inner_1'>
-<img src="assets/8g.svg"/>
-<div class="ring ring-two" id='ring_2'>
-<img src="assets/8.svg"/>
-<div class="ring-inner ring-inner-two">
-<img src="assets/8g.svg"/>
-<div class="ring ring-three">
-<img src="assets/8.svg"/>
-<div class="ring-inner ring-inner-three">
-<img src="assets/8g.svg"/>
-<div class="ring ring-four">
-<img src="assets/8.svg"/>
-<div class="ring-inner ring-inner-four">
-<img src="assets/8g.svg"/>
-<div class="ring ring-five">
-<img src="assets/8.svg"/>
-<div class="ring-inner ring-inner-five">
-<img src="assets/8g.svg"/>
+<div id='ring_1' class="ring ring-one" curval=8 targetval=5 right=false ringnumber='1' >
+<img id="ring_1~graphic" src="assets/8.svg"/>
+<div id='ring_1~guide' class="ring-inner ring-inner-one" >
+<img id="ring_1~guide_graphic" src="assets/5g.svg"/>
+<div id='ring_2' class="ring ring-two" curval=8 targetval=5 right=false ringnumber='2' >
+<img id="ring_2~graphic" src="assets/8.svg"/>
+<div id='ring_2~guide' class="ring-inner ring-inner-two" >
+<img id="ring_2~guide_graphic" src="assets/8g.svg"/>
+<div id='ring_3' class="ring ring-three" curval=8 targetval=5 right=false  ringnumber='3' >
+<img id="ring_3~graphic" src="assets/8.svg"/>
+<div id='ring_3~guide' class="ring-inner ring-inner-three" >
+<img id="ring_3~guide_graphic" src="assets/8g.svg"/>
+<div id='ring_4' class="ring ring-four" curval=8 targetval=5 right=false ringnumber='4' >
+<img id="ring_4~graphic" src="assets/8.svg"/>
+<div id='ring_4~guide' class="ring-inner ring-inner-four" >
+<img id="ring_4~guide_graphic" src="assets/8g.svg"/>
 </div>
 </div>
 </div>
@@ -123,19 +129,10 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<div id='target'>5,7,9</div>
-<div id='statedisplay_1'></div>
 <br/>
-<div class=ringnot curval=1 targetval=7 right=false ringnumber='2' id='ring_2'>7</div>
-</div>
 <script>
 
-function clamp(element) {
-    element.setAttribute('curval', parseInt(element.getAttribute('curval')));
-    document.getElementById('statedisplay_' +element.getAttribute('ringnumber')).innerHTML = element.getAttribute('curval');
-}
+
 function check(element) {
     let target = element.getAttribute('targetval');
     let curval = element.getAttribute('curval');
@@ -150,6 +147,10 @@ function check(element) {
     }
 
 }
+function makeBetweenTwoAndSixteen(val) {
+  return parseInt(Math.min(16, Math.max(val,2)));
+}
+
 function checkAll() {
     let isWin = true;
     for(var i = 1; i<=activeRings; i++) {
@@ -157,34 +158,44 @@ function checkAll() {
     }
     if(isWin) {
         document.getElementById('winmessage').innerHTML = "You win!";
-    } 
+    }
 }
 
 function slide(event) {
     //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
-    let newVal = parseInt(event.target.getAttribute('curval')) + event.deltaY * rate;
-    event.target.setAttribute('curval', newVal);
-    
-    var currentTimeoutId = event.target.getAttribute('clampTimeoutId');
+    let target = event.target;
+    if(event.target.id.includes('~')) {
+      target = document.getElementById(event.target.id.split('~')[0]);
+    }
+    if(!target.getAttribute("right").endsWith("true")){
+      let newVal = makeBetweenTwoAndSixteen(parseInt(target.getAttribute('curval')) + event.deltaY * rate);
+      target.setAttribute("curval", newVal);
+      let ringNumber = target.getAttribute('ringnumber');
+      let image = document.getElementById("ring_" + ringNumber + "~graphic");
+      image.src ="assets/" + newVal + ".svg";
+    }
+
+    var currentTimeoutId = target.getAttribute('clampTimeoutId');
     if(currentTimeoutId) {
         clearTimeout(currentTimeoutId);
     }
     let timeoutId = setTimeout(function() {
-        clamp(event.target);
-        check(event.target);
-        event.target.setAttribute('clampTimeoutId', '');
+        check(target);
+        target.setAttribute('checkTimeoutId', '');
         checkAll();
-    }, 1000);
-    event.target.setAttribute('clampTimeoutId', timeoutId);
+    }, 750);
+    target.setAttribute('checkTimeoutId', timeoutId);
 }
 
 
-let rate = 0.01;
-let activeRings = 2;
+let rate = 0.05;
+let activeRings = 4;
 
 document.getElementById('ring_1').onwheel = slide;
-document.getElementById('ring_2').onwheel = slide;
+
+
+
 </script>
 </body>
 </html>

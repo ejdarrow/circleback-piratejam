@@ -7,28 +7,37 @@
     --wood: #867342;
     --marble: #FFFCF0;
     --ebony: #555D50;
-    --container-height: 600px;
-    --container-width: 600px;
-    --radial-difference: 50px;
+    --container-height: 1000px;
+    --container-width: 1000px;
+    --radial-difference: 90px;
     --radial-difference-half: calc(var(--radial-difference) / 2);
+    --top-base: 0px;
+    --left-base: 0px;
 }
 
 .container {
     height: var(--container-height);
     width: var(--container-width);
     position: absolute;
+    top: var(--top-base);
+    left:var(--left-base);
 }
 .ring-inner { /* background-color: black; */
-    background-color: var(--gold);
+    background-color: var(--blood);
     border-radius: 50%;
-    position: relative;
-    margin: var(--radial-difference-half); 
+    position: absolute;
+    margin: var(--radial-difference-half);
+    top: var(--top-base);
+    left: var(--left-base);
+ 
 }
 .ring {
     background-color: var(--ebony);
     border-radius: 50%;
     position: absolute;
     margin: var(--radial-difference-half);
+    top: var(--top-base);
+    left: var(--left-base);
 }
 .ring-one {
     height: calc(var(--container-height) - var(--radial-difference));
@@ -86,15 +95,25 @@
 <div id='winmessage'></div>
 <div class="container">
 <div class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' id='ring_1'>
+<img src="assets/8.svg"/>
 <div class="ring-inner ring-inner-one" id='ring-inner_1'>
+<img src="assets/8g.svg"/>
 <div class="ring ring-two" id='ring_2'>
+<img src="assets/8.svg"/>
 <div class="ring-inner ring-inner-two">
+<img src="assets/8g.svg"/>
 <div class="ring ring-three">
+<img src="assets/8.svg"/>
 <div class="ring-inner ring-inner-three">
+<img src="assets/8g.svg"/>
 <div class="ring ring-four">
+<img src="assets/8.svg"/>
 <div class="ring-inner ring-inner-four">
+<img src="assets/8g.svg"/>
 <div class="ring ring-five">
+<img src="assets/8.svg"/>
 <div class="ring-inner ring-inner-five">
+<img src="assets/8g.svg"/>
 </div>
 </div>
 </div>

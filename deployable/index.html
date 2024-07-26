@@ -15,15 +15,22 @@
     --left-base: 0px;
 }
 .menu-container {
-    align-content: center;
     background-color:white;
         height: var(--container-height);
         width: var(--container-width);
         position: absolute;
         top: var(--top-base);
         left:var(--left-base);
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+}
+.menu-presenter {
+  display:block;
+  justify-content:center;
+  align-items:center;
+}
 
 .container {
     height: var(--container-height);
@@ -88,19 +95,79 @@
 
 
 </style>
-
+<script>
+// Some global quick functions. Heavy stuff is at the bottom.
+function showHowToPlay() {
+  document.getElementById('hideable-menu-content').style.display = 'none';
+  document.getElementById('game-rules').style.display = 'block';
+}
+function showMenuFromRules() {
+  document.getElementById('hideable-menu-content').style.display = 'block';
+  document.getElementById('game-rules').style.display = 'none';
+}
+function showDeveloperCommentary() {
+  document.getElementById('hideable-menu-content').style.display = 'none';
+  document.getElementById('developer-commentary').style.display = 'block';
+}
+function showMenuFromDeveloperCommentary() {
+  document.getElementById('hideable-menu-content').style.display = 'block';
+  document.getElementById('developer-commentary').style.display = 'none';
+}
+function showChoiceButtons() {
+  document.getElementById('choice-button-holder').style.display = 'block';
+}
+function hideChoiceButtons() {
+  document.getElementById('choice-button-holder').style.display = 'none';
+}
+</script>
 
 </head>
 <body style="background-color:gray;">
-<div id='menuHolder' class="menu-container">
-  <h1> Welcome to Circle Back</h1>
-  <button> Play </button>
-  <h3> How to Play </h3>
+<div id='menu-holder' class="menu-container">
+  <div id='menu-presenter' class="menu-presenter">
+    <div id='hideable-menu-content' style='display:block'>
+  <h1>Circle Back</h1>
+  <h3>A Trash Captains/Piercing Arrow Production</h3>
+  <p> For your consideration, an alchemy-themed mouse wheel game.</p>
+  <h3><a href="#" onclick="showHowToPlay()"> How to Play (WIP)</a></h3>
+  <h3 id="developerCommentaryButton" hidden><a href="#" onclick="showDeveloperCommentary()">Developer Commentary</a></h3>
+  <h3 hidden><a href="#" onclick="showSettings()"> Settings (NYI)</a></h3>
+  <button onclick="startGame()"> Play </button>
+</div>
+  <div id='game-rules' style='display:none; margin:50px;'>
+    <p>This game is played by matching visual prompts shown in rings within other rings.
+    The idea is to match up the alchemical array to the guide marks and complete the array.
+    You then can choose whether to 'go deeper' or to score.
+    Beware, however, that going deeper into the abyss will require you to climb back out
+    by solving the arrays you solved on the way down in reverse order.
+
+    Your total score is a function of how much of your time you use, how many rings you complete,
+    and how well you use your time.
+    </p>
+    <a href="#" onclick="showMenuFromRules()">Return to Menu</a>
+  </div>
+  <div id='developer-commentary' style='display:none; margin:50px;'>
+    <p>Astute individuals might notice that this application includes no libraries or engine.
+      While I could have tried to use an engine or relied on libraries to do clever
+      and interesting things, I decided at the beginning to go with a minimal approach. </p>
+    <p>My desire was to achieve something with the least actual content as possible, entirely
+      by hand. This of course means that the game is relatively ugly and somewhat feature-light.
+      I remember a long time ago coming across a project called kkrieger, which was a first-person-shooter
+      submitted as a contest entrant for a program with less than a certain size. I always
+      admired the ingenuity that that project must have taken.</p>
+    <p>This game is certainly not a triumph of engineering or cleverness, but much like carving
+      a piece of wood with a knife and putting it on your desk, I am happy that I worked on it.</p>
+      <br/>
+      <p> Thank you for reading this. ~ Emily, a.k.a. Headless, the Trash Captain. </p>
+      <a href="#" onclick="showMenuFromDeveloperCommentary()">Return to Menu</a>
+
+  </div>
+</div>
 </div>
 
 
 
-<div id='gameHolder' class="container" hidden>
+<div id='game-holder' class="container" style='display:none'>
 <b>Content</b>
 <div id='gamestate'></div>
 <div id='winmessage'></div>
@@ -131,7 +198,21 @@
 </div>
 <br/>
 <script>
+function startGame() {
+  document.getElementById('menu-holder').style.display = 'none';
+  document.getElementById('game-holder').style.display = 'block';
 
+  //Begin Timer and basic game event management
+  // BeginRound()
+  // Show Depth Tracker
+  //
+}
+function beginRound(){
+
+}
+function beginTimer() {
+  
+}
 
 function check(element) {
     let target = element.getAttribute('targetval');
@@ -157,7 +238,8 @@ function checkAll() {
         isWin = isWin && ('true' === document.getElementById('ring_' + i).getAttribute('right'));
     }
     if(isWin) {
-        document.getElementById('winmessage').innerHTML = "You win!";
+        showChoiceButtons();
+        //document.getElementById('winmessage').innerHTML = "You win!";
     }
 }
 

@@ -357,6 +357,11 @@ function goDeeper() {
   hideChoiceButtons();
   beginCircle();
 }
+function goBack() {
+  gameState.isReturning = true;
+  hideChoiceButtons();
+  beginCircle();
+}
 
 function beginCountdown() {
   document.getElementById("countdownDialog").showModal();
@@ -464,7 +469,13 @@ function checkAll() {
     }
     if(isRoundWin) {
       if(gameState.isReturning) {
-
+        gameState.circlesSolved += 1;
+        if(gameState.levelsDeep == 0){
+          doWin();
+        } else {
+          gameState.levelsDeep -= 1;
+          beginCircle();
+        }
       } else {
         gameState.circlesSolved += 1;
         if(gameState.levelsDeep > 0){

@@ -5,7 +5,7 @@
 <symbol id="curve" width="10" height="10" viewBox="0 0 10 10">
 <path d="M7,4 C0,7 7,0 4,7" fill="none" stroke-width="0.1px" stroke="gold" />
 </symbol>
-<symbol id="sigil" width="20" height="20" viewBox="0 0 10 10">
+<symbol id="sigil" width="20" height="20" viewBox="0 0 9 9">
 <use href="#curve" x="0" y="0" transform="scale(1.5)"/>
 </symbol>
 <use href="#sigil" x="25" y="25" />
@@ -14,4 +14,3 @@
 <use href="#sigil" x="25" y="25" transform="rotate(270 25 25)"/>
 
 </svg>
-

@@ -14,6 +14,17 @@
     --top-base: 0px;
     --left-base: 0px;
 }
+::backdrop {
+  background-color: gray;
+  opacity: 0.95;
+}
+.choice-button-holder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .menu-container {
     background-color:white;
         height: var(--container-height);
@@ -97,6 +108,11 @@
 </style>
 <script>
 // Some global quick functions. Heavy stuff is at the bottom.
+
+function makeBetweenTwoAndSixteen(val) {
+  return parseInt(Math.min(16, Math.max(val,2)));
+}
+
 function showHowToPlay() {
   document.getElementById('hideable-menu-content').style.display = 'none';
   document.getElementById('game-rules').style.display = 'block';
@@ -126,15 +142,15 @@ function hideChoiceButtons() {
 <div id='menu-holder' class="menu-container">
   <div id='menu-presenter' class="menu-presenter">
     <div id='hideable-menu-content' style='display:block'>
-  <h1>Circle Back</h1>
-  <h3>A Trash Captains/Piercing Arrow Production</h3>
-  <p> For your consideration, an alchemy-themed mouse wheel game.</p>
-  <h3><a href="#" onclick="showHowToPlay()"> How to Play (WIP)</a></h3>
-  <h3 id="developerCommentaryButton" hidden><a href="#" onclick="showDeveloperCommentary()">Developer Commentary</a></h3>
-  <h3 hidden><a href="#" onclick="showSettings()"> Settings (NYI)</a></h3>
-  <button onclick="startGame()"> Play </button>
-</div>
-  <div id='game-rules' style='display:none; margin:50px;'>
+      <h1>Circle Back</h1>
+      <h3>A Trash Captains/Piercing Arrow Production</h3>
+      <p> For your consideration, an alchemy-themed mouse wheel game.</p>
+      <h3><a href="#" onclick="showHowToPlay()"> How to Play (WIP)</a></h3>
+      <h3 id="developerCommentaryButton" hidden><a href="#" onclick="showDeveloperCommentary()">Developer Commentary</a></h3>
+      <h3 hidden><a href="#" onclick="showSettings()"> Settings (NYI)</a></h3>
+      <button onclick="startGame()"> Play </button>
+    </div>
+    <div id='game-rules' style='display:none; margin:50px;'>
     <p>This game is played by matching visual prompts shown in rings within other rings.
     The idea is to match up the alchemical array to the guide marks and complete the array.
     You then can choose whether to 'go deeper' or to score.
@@ -146,10 +162,12 @@ function hideChoiceButtons() {
     </p>
     <a href="#" onclick="showMenuFromRules()">Return to Menu</a>
   </div>
-  <div id='developer-commentary' style='display:none; margin:50px;'>
+    <div id='developer-commentary' style='display:none; margin:50px;'>
     <p>Astute individuals might notice that this application includes no libraries or engine.
       While I could have tried to use an engine or relied on libraries to do clever
-      and interesting things, I decided at the beginning to go with a minimal approach. </p>
+      and interesting things, I decided at the beginning to go with a minimal approach and
+      limited myself to one file of logic and only a few bits from StackOverflow
+       to fill in the blanks in my understanding.</p>
     <p>My desire was to achieve something with the least actual content as possible, entirely
       by hand. This of course means that the game is relatively ugly and somewhat feature-light.
       I remember a long time ago coming across a project called kkrieger, which was a first-person-shooter
@@ -162,88 +180,308 @@ function hideChoiceButtons() {
       <a href="#" onclick="showMenuFromDeveloperCommentary()">Return to Menu</a>
 
   </div>
-</div>
+  </div>
 </div>
 
 
 
 <div id='game-holder' class="container" style='display:none'>
-<b>Content</b>
+<b>Time Remaining:</b>
 <div id='gamestate'></div>
-<div id='winmessage'></div>
-<div id='ring_1' class="ring ring-one" curval=8 targetval=5 right=false ringnumber='1' >
-<img id="ring_1~graphic" src="assets/8.svg"/>
-<div id='ring_1~guide' class="ring-inner ring-inner-one" >
-<img id="ring_1~guide_graphic" src="assets/5g.svg"/>
-<div id='ring_2' class="ring ring-two" curval=8 targetval=5 right=false ringnumber='2' >
-<img id="ring_2~graphic" src="assets/8.svg"/>
-<div id='ring_2~guide' class="ring-inner ring-inner-two" >
-<img id="ring_2~guide_graphic" src="assets/8g.svg"/>
-<div id='ring_3' class="ring ring-three" curval=8 targetval=5 right=false  ringnumber='3' >
-<img id="ring_3~graphic" src="assets/8.svg"/>
-<div id='ring_3~guide' class="ring-inner ring-inner-three" >
-<img id="ring_3~guide_graphic" src="assets/8g.svg"/>
-<div id='ring_4' class="ring ring-four" curval=8 targetval=5 right=false ringnumber='4' >
-<img id="ring_4~graphic" src="assets/8.svg"/>
-<div id='ring_4~guide' class="ring-inner ring-inner-four" >
-<img id="ring_4~guide_graphic" src="assets/8g.svg"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+<div id='timerDisplay'></div>
+<dialog id="countdownDialog">Start in: <div id="countdownDisplay"></div></dialog>
+<dialog id="winDialog">Your Score: <span id="totalScore"></span></dialog>
+
+<div id='ring_1' class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' >
+  <img id="ring_1~graphic" src="assets/initial.svg"/>
+  <div id='ring_1~guide' class="ring-inner ring-inner-one" >
+    <img id="ring_1~guide_graphic" src="assets/5g.svg"/>
+    <div id='ring_2' class="ring ring-two" curval=1 targetval=5 right=false ringnumber='2' >
+      <img id="ring_2~graphic" src="assets/initial.svg"/>
+      <div id='ring_2~guide' class="ring-inner ring-inner-two" >
+        <img id="ring_2~guide_graphic" src="assets/8g.svg"/>
+        <div id='ring_3' class="ring ring-three" curval=1 targetval=5 right=false  ringnumber='3' >
+          <img id="ring_3~graphic" src="assets/initial.svg"/>
+          <div id='ring_3~guide' class="ring-inner ring-inner-three" >
+            <img id="ring_3~guide_graphic" src="assets/8g.svg"/>
+            <div id='ring_4' class="ring ring-four" curval=1 targetval=5 right=false ringnumber='4' >
+              <img id="ring_4~graphic" src="assets/initial.svg"/>
+              <div id='ring_4~guide' class="ring-inner ring-inner-four" >
+                <img id="ring_4~guide_graphic" src="assets/8g.svg"/>
+                <div id="choice-button-holder" class="choice-button-holder" style="display:none">
+                  <button id="scoreButton" onclick="doWin()">Score</button>
+                  <button id="deeperButton" onclick="goDeeper()">Go Deeper</button>
+                  <button id="returnButton" onclick="goBack()">Return</button>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </div>
 <br/>
 <script>
+//-------- Borrowed from StackOverflow and modified.
+var Timer = function(elem, options) {
+
+  var timer = createTimer(),
+    offset,
+    clock,
+    interval;
+
+  // default options
+  options = options || {};
+  options.countdownFrom = options.countdownFrom || 60;
+  options.delay = options.delay || 1;
+
+  // append elements
+  elem.appendChild(timer);
+
+  // initialize
+  reset();
+
+  // private functions
+  function createTimer() {
+    return document.createElement("span");
+  }
+
+
+  function start() {
+    if (!interval) {
+      offset = Date.now();
+      interval = setInterval(update, options.delay);
+    }
+  }
+
+  function stop() {
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+  }
+
+  function reset() {
+    clock = 0;
+    render(0);
+  }
+
+  function update() {
+    checkOutOfTime();
+    clock += delta();
+    render();
+  }
+  function checkOutOfTime() {
+    if((options.countdownFrom  - (clock / 1000)) <= 0) {
+      stop();
+      options.zeroCallback();
+    }
+  }
+
+  function getRemaining() {
+    return (options.countdownFrom - (clock / 1000)).toFixed(1);
+  }
+
+  function render() {
+    timer.innerHTML = getRemaining();
+  }
+
+  function delta() {
+    var now = Date.now(),
+      d = now - offset;
+
+    offset = now;
+    return d;
+  }
+
+  // public API
+  this.start = start;
+  this.stop = stop;
+  this.getRemaining = getRemaining;
+};
+
+//-------
+let timeLimit = 60;
+let countIn = 5;
+let gameTimer;
+
+let solvedColor = '#867342';
+let unsolvedColor = 'black';
+
+let gameState = {
+  circlesSolved: 0,
+  levelsDeep: 0,
+  hasWon: false,
+  hasLost: false,
+  isReturning: false,
+  circles: []
+};
+
+const gameStateInitial = {
+  circlesSolved: 0,
+  levelsDeep: 0,
+  hasWon: false,
+  hasLost: false,
+  isReturning: false,
+  circles: []
+};
+
+function doWin() {
+  gameState.hasWon = true;
+  hideChoiceButtons();
+  gameTimer.stop();
+  let timeRemaining = gameTimer.getRemaining();
+  let timeUsed = timeLimit - timeRemaining;
+  let timeUsedPercent = timeLimit/timeUsed;
+  let totalScore = timeUsedPercent * gameState.circlesSolved;
+  document.getElementById("winDialog").showModal();
+  document.getElementById("totalScore").innerHTML = (totalScore * 100).toFixed(2);
+}
+
 function startGame() {
   document.getElementById('menu-holder').style.display = 'none';
   document.getElementById('game-holder').style.display = 'block';
-
-  //Begin Timer and basic game event management
-  // BeginRound()
+  beginCountdown();
+  // Track idle time
   // Show Depth Tracker
   //
 }
-function beginRound(){
+
+function goDeeper() {
+  gameState.levelsDeep += 1;
+  hideChoiceButtons();
+  beginCircle();
+}
+
+function beginCountdown() {
+  document.getElementById("countdownDialog").showModal();
+  countdown = new Timer(document.getElementById('countdownDisplay'), {"delay":100, "countdownFrom":countIn, "zeroCallback":beginGame});
+  countdown.start();
+}
+
+function beginTimer() {
+  gameTimer = new Timer(document.getElementById('timerDisplay'), {"delay": 100, "countdownFrom":timeLimit, "zeroCallback":lose});
+  gameTimer.start();
+}
+
+function beginGame(){
+  document.getElementById("countdownDialog").close();
+  beginTimer();
+  beginCircle();
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+function getRandomRing() {
+  return 2 + getRandomInt(15);
+}
+function reverseCircle(circle) {
+  return {
+    ring1goal: circle.ring4goal,
+    ring2goal: circle.ring3goal,
+    ring3goal: circle.ring2goal,
+    ring4goal: circle.ring1goal
+  }
+}
+function beginCircle() {
+
+  let ring1 = document.getElementById("ring_1");
+  let ring2 = document.getElementById("ring_2");
+  let ring3 = document.getElementById("ring_3");
+  let ring4 = document.getElementById("ring_4");
+
+  ring1.style.backgroundColor = unsolvedColor;
+  ring2.style.backgroundColor = unsolvedColor;
+  ring3.style.backgroundColor = unsolvedColor;
+  ring4.style.backgroundColor = unsolvedColor;
+
+  ring1.setAttribute('right', false);
+  ring2.setAttribute('right', false);
+  ring3.setAttribute('right', false);
+  ring4.setAttribute('right', false);
+
+  let circle;
+  if(gameState.isReturning) {
+    circle = reverseCircle(gameState.circles.pop());
+  } else {
+    circle = {
+      ring1goal: getRandomRing(),
+      ring2goal: getRandomRing(),
+      ring3goal: getRandomRing(),
+      ring4goal: getRandomRing()
+    }
+    gameState.circles.push(circle);
+  }
+  document.getElementById("ring_1").setAttribute("targetval",circle.ring1goal);
+  document.getElementById("ring_1~guide_graphic").src = 'assets/'+circle.ring1goal + 'g.svg';
+  document.getElementById("ring_2").setAttribute("targetval",circle.ring2goal);
+  document.getElementById("ring_2~guide_graphic").src = 'assets/'+circle.ring2goal + 'g.svg';
+  document.getElementById("ring_3").setAttribute("targetval",circle.ring3goal);
+  document.getElementById("ring_3~guide_graphic").src = 'assets/'+circle.ring3goal + 'g.svg';
+  document.getElementById("ring_4").setAttribute("targetval",circle.ring4goal);
+  document.getElementById("ring_4~guide_graphic").src = 'assets/'+circle.ring4goal + 'g.svg';
+}
+
+function showLoseMessage() {
 
 }
-function beginTimer() {
-  
+
+function lose() {
+  if(gameState.hasWon) {
+    return;
+  } else {
+    showLoseMessage();
+  }
 }
+
+
 
 function check(element) {
     let target = element.getAttribute('targetval');
     let curval = element.getAttribute('curval');
     if(curval === target) {
-        element.style.color = 'green';
-        element.style.backgroundColor = 'green';
+        element.style.color = solvedColor;
+        element.style.backgroundColor = solvedColor;
         element.setAttribute('right',true);
     } else {
-        element.style.color = 'black';
-        element.style.backgroundColor = 'black';
+        element.style.color = unsolvedColor;
+        element.style.backgroundColor = unsolvedColor;
         element.setAttribute('right',false);
     }
 
 }
-function makeBetweenTwoAndSixteen(val) {
-  return parseInt(Math.min(16, Math.max(val,2)));
-}
 
 function checkAll() {
-    let isWin = true;
+    let isRoundWin = true;
     for(var i = 1; i<=activeRings; i++) {
-        isWin = isWin && ('true' === document.getElementById('ring_' + i).getAttribute('right'));
+        isRoundWin = isRoundWin && ('true' === document.getElementById('ring_' + i).getAttribute('right'));
     }
-    if(isWin) {
+    if(isRoundWin) {
+      if(gameState.isReturning) {
+
+      } else {
+        gameState.circlesSolved += 1;
+        if(gameState.levelsDeep > 0){
+          document.getElementById("scoreButton").hidden = true;
+          document.getElementById("returnButton").hidden = false;
+        } else {
+          document.getElementById("scoreButton").hidden = false;
+          document.getElementById("returnButton").hidden = true;
+        }
         showChoiceButtons();
-        //document.getElementById('winmessage').innerHTML = "You win!";
+      }
     }
 }
 
 function slide(event) {
+    //Track and reset IDLE Counter
+
     //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
     let target = event.target;

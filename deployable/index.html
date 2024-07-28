@@ -97,13 +97,23 @@
     height:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
     width:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
   }
+  .guide_graphic {
+    float: inherit;
+  }
 
 </style>
 <script>
   // Some global quick functions. Heavy stuff is at the bottom.
 
   function makeBetweenTwoAndSixteen(val) {
-    return parseInt(Math.min(16, Math.max(val,2)));
+    let wrappedVal = parseInt(Math.min(17, Math.max(val,1)));
+    if(wrappedVal == 17){
+      return 2;
+    } else if(wrappedVal==1){
+      return 16;
+    } else {
+      return wrappedVal;
+    }
   }
 
   function showHowToPlay() {
@@ -144,7 +154,7 @@
       <br>
       <span><input id="useMusic" type="checkbox" checked> Use Ambience</span>
       <br>
-      <span><input id="useClick" type="checkbox"> Use Click instead of Scroll (NYI)</span>
+      <span><input id="useClick" type="checkbox"> Use Click instead of Scroll (experimental)</span>
       <h3><a href="#" onclick="showHowToPlay()"> How to Play </a></h3>
       <h3><a href="#" onclick="showDeveloperCommentary()">Credits and Thanks</a></h3>
     </div>
@@ -168,22 +178,6 @@
         <li>Javascript timer function original credit to <a target='_blank' href="https://stackoverflow.com/questions/20318822/how-to-create-a-stopwatch-using-javascript">this stackoverflow post.</a></li>
         <li>Everything else - Emily (me)</li>
       </ul>
-      <br>
-      <h2>Developer Comments</h2>
-    <p>Astute individuals might notice that this application includes no libraries or engine.
-      While I could have tried to use an engine or relied on libraries to do clever
-      and interesting things, I decided at the beginning to go with a minimal approach and
-      limited myself to one file of logic and only a few bits from StackOverflow
-       to fill in the blanks in my understanding.</p>
-    <p>My desire was to achieve something with the least actual content as possible, entirely
-      by hand. This of course means that the game is relatively ugly and somewhat feature-light.
-      I remember a long time ago coming across a project called kkrieger, which was a first-person-shooter
-      submitted as a contest entrant for a program with less than a certain size. I always
-      admired the ingenuity that that project must have taken.</p>
-    <p>This game is certainly not a triumph of engineering or cleverness, but much like carving
-      a piece of wood with a knife and putting it on your desk, I am happy that I worked on it.</p>
-      <br/>
-      <p> Thank you for reading this. ~ Emily, a.k.a. Headless, the Trash Captain. </p>
       <a href="#" onclick="showMenuFromDeveloperCommentary()">Return to Menu</a>
 
   </div>
@@ -193,10 +187,9 @@
 
 
 <div id='game-holder' class="container" style='display:none'>
-<b>Time Remaining:</b>
+<h2>Time Remaining:<span id='timerDisplay'></span></h2>
 <div id='gamestate'></div>
 
-<div id='timerDisplay'></div>
 <!-- Dialogs -->
   <dialog id="countdownDialog">Start in: <div id="countdownDisplay"></div></dialog>
   <dialog id="winDialog">Your Score: <span id="totalScore"></span>
@@ -454,12 +447,115 @@ function lose() {
   }
 }
 
+
+let rate = 0.05;
+let activeRings = 4;
+
+//--------------- Controls -------------------
+function slide(event) {
+    //Track and reset IDLE Counter
+
+    //rate = parseDouble(document.getElementById('rate').innerHTML);
+    event.preventDefault();
+    let target = event.target;
+    if(event.target.id.includes('~')) {
+      target = document.getElementById(event.target.id.split('~')[0]);
+    }
+    if(!target.getAttribute("right").endsWith("true")){
+      let newVal = makeBetweenTwoAndSixteen(parseInt(target.getAttribute('curval')) + event.deltaY * rate);
+      target.setAttribute("curval", newVal);
+      let ringNumber = target.getAttribute('ringnumber');
+      let image = document.getElementById("ring_" + ringNumber + "~graphic");
+      image.src ="assets/" + newVal + ".svg";
+    }
+
+    var currentTimeoutId = target.getAttribute('clampTimeoutId');
+    if(currentTimeoutId) {
+        clearTimeout(currentTimeoutId);
+    }
+    let timeoutId = setTimeout(function() {
+        check(target);
+        target.setAttribute('checkTimeoutId', '');
+        checkAll();
+    }, 750);
+    target.setAttribute('checkTimeoutId', timeoutId);
+}
+
+//Add 1 to ring on left click.
+function add(event) {
+    //Track and reset IDLE Counter
+
+    //rate = parseDouble(document.getElementById('rate').innerHTML);
+    event.preventDefault();
+    let target = event.target;
+    if(event.target.id.includes('~')) {
+      target = document.getElementById(event.target.id.split('~')[0]);
+    }
+    if(!target.getAttribute("right").endsWith("true")){
+      let newVal = makeBetweenTwoAndSixteen(parseInt(target.getAttribute('curval')) + 1);
+      target.setAttribute("curval", newVal);
+      let ringNumber = target.getAttribute('ringnumber');
+      let image = document.getElementById("ring_" + ringNumber + "~graphic");
+      image.src ="assets/" + newVal + ".svg";
+    }
+
+    var currentTimeoutId = target.getAttribute('clampTimeoutId');
+    if(currentTimeoutId) {
+        clearTimeout(currentTimeoutId);
+    }
+    let timeoutId = setTimeout(function() {
+        check(target);
+        target.setAttribute('checkTimeoutId', '');
+        checkAll();
+    }, 750);
+    target.setAttribute('checkTimeoutId', timeoutId);
+}
+//Subtract 1 from ring on right click.
+function subtract(event) {
+    //Track and reset IDLE Counter
+
+    //rate = parseDouble(document.getElementById('rate').innerHTML);
+    event.preventDefault();
+    let target = event.target;
+    if(event.target.id.includes('~')) {
+      target = document.getElementById(event.target.id.split('~')[0]);
+    }
+    if(!target.getAttribute("right").endsWith("true")){
+      let newVal = makeBetweenTwoAndSixteen(parseInt(target.getAttribute('curval')) - 1);
+      target.setAttribute("curval", newVal);
+      let ringNumber = target.getAttribute('ringnumber');
+      let image = document.getElementById("ring_" + ringNumber + "~graphic");
+      image.src ="assets/" + newVal + ".svg";
+    }
+
+    var currentTimeoutId = target.getAttribute('clampTimeoutId');
+    if(currentTimeoutId) {
+        clearTimeout(currentTimeoutId);
+    }
+    let timeoutId = setTimeout(function() {
+        check(target);
+        target.setAttribute('checkTimeoutId', '');
+        checkAll();
+    }, 750);
+    target.setAttribute('checkTimeoutId', timeoutId);
+}
+//------------- Out of Control, Sorry ---------------
+
+
 function startGame() {
+
+
   gameState.useSound = document.getElementById('useSound').checked;
   gameState.useMusic = document.getElementById('useMusic').checked;
-  gameState.useClickInsteadOfScroll = document.getElementById('useClick');
+  gameState.useClickInsteadOfScroll = document.getElementById('useClick').checked;
   document.getElementById('menu-holder').style.display = 'none';
   document.getElementById('game-holder').style.display = 'block';
+  if(gameState.useClickInsteadOfScroll) {
+    document.getElementById('ring_1').onclick = add;
+    document.getElementById('ring_1').addEventListener('contextmenu', subtract, false);
+  } else {
+    document.getElementById('ring_1').onwheel = slide;
+  }
   beginCountdown();
   // Track idle time?
   // Show Depth Tracker?
@@ -608,40 +704,8 @@ function checkAll() {
     }
 }
 
-function slide(event) {
-    //Track and reset IDLE Counter
-
-    //rate = parseDouble(document.getElementById('rate').innerHTML);
-    event.preventDefault();
-    let target = event.target;
-    if(event.target.id.includes('~')) {
-      target = document.getElementById(event.target.id.split('~')[0]);
-    }
-    if(!target.getAttribute("right").endsWith("true")){
-      let newVal = makeBetweenTwoAndSixteen(parseInt(target.getAttribute('curval')) + event.deltaY * rate);
-      target.setAttribute("curval", newVal);
-      let ringNumber = target.getAttribute('ringnumber');
-      let image = document.getElementById("ring_" + ringNumber + "~graphic");
-      image.src ="assets/" + newVal + ".svg";
-    }
-
-    var currentTimeoutId = target.getAttribute('clampTimeoutId');
-    if(currentTimeoutId) {
-        clearTimeout(currentTimeoutId);
-    }
-    let timeoutId = setTimeout(function() {
-        check(target);
-        target.setAttribute('checkTimeoutId', '');
-        checkAll();
-    }, 750);
-    target.setAttribute('checkTimeoutId', timeoutId);
-}
 
 
-let rate = 0.05;
-let activeRings = 4;
-
-document.getElementById('ring_1').onwheel = slide;
 
 
 

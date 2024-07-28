@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
-<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="-10 -10 70 70" xmlns="http://www.w3.org/2000/svg">
 <symbol id="curve" width="10" height="10" viewBox="0 0 10 10">
 <path d="M7,4 C0,7 7,0 4,7" fill="none" stroke-width="0.1px" stroke="grey" stroke-opacity="60%" />
 </symbol>

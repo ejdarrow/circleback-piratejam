@@ -56,7 +56,17 @@
     margin: var(--radial-difference-half);
     top: var(--top-base);
     left: var(--left-base);
+
   }
+
+  .ring-inner > img {
+    height: 140%;
+    width: 140%;
+    margin-left:-20%;
+    margin-top:-20%;
+    pointer-events:none;
+  }
+
   .ring {
     background-color: black;
     border-radius: 50%;
@@ -64,6 +74,10 @@
     margin: var(--radial-difference-half);
     top: var(--top-base);
     left: var(--left-base);
+
+  }
+  .ring > img {
+    pointer-events:none;
   }
   .ring-one {
     height: calc(var(--container-height) - var(--radial-difference));
@@ -97,10 +111,6 @@
     height:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
     width:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
   }
-  .guide_graphic {
-    float: inherit;
-  }
-
 </style>
 <script>
   // Some global quick functions. Heavy stuff is at the bottom.
@@ -154,7 +164,7 @@
       <br>
       <span><input id="useMusic" type="checkbox" checked> Use Ambience</span>
       <br>
-      <span><input id="useClick" type="checkbox"> Use Click instead of Scroll (experimental)</span>
+      <span><input id="useClick" type="checkbox" checked> Use Click and Right click for fine tuning (experimental)</span>
       <h3><a href="#" onclick="showHowToPlay()"> How to Play </a></h3>
       <h3><a href="#" onclick="showDeveloperCommentary()">Credits and Thanks</a></h3>
     </div>
@@ -187,7 +197,7 @@
 
 
 <div id='game-holder' class="container" style='display:none'>
-<h2>Time Remaining:<span id='timerDisplay'></span></h2>
+<h2>Time Remaining: <span id='timerDisplay'></span></h2>
 <div id='gamestate'></div>
 
 <!-- Dialogs -->
@@ -203,7 +213,7 @@
 <!-- /Dialogs -->
 
 <div id='ring_1' class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' >
-  <img id="ring_1~graphic" src="assets/initial.svg"/>
+  <img id="ring_1~graphic" class='guide_graphic' src="assets/initial.svg"/>
   <div id='ring_1~guide' class="ring-inner ring-inner-one" >
     <img id="ring_1~guide_graphic" src="assets/5g.svg"/>
     <div id='ring_2' class="ring ring-two" curval=1 targetval=5 right=false ringnumber='2' >
@@ -223,8 +233,6 @@
                   <button id="deeperButton" onclick="goDeeper()">Go Deeper</button>
                   <button id="returnButton" onclick="goBack()">Return</button>
                 </div>
-
-
               </div>
             </div>
           </div>
@@ -432,6 +440,7 @@ function doWin() {
   let timeUsedPercent = timeLimit/timeUsed;
   let totalScore = timeUsedPercent * gameState.circlesSolved;
   document.getElementById("winDialog").showModal();
+  // TODO: Compose detailed score report
   document.getElementById("totalScore").innerHTML = (totalScore * 100).toFixed(2);
 }
 
@@ -457,7 +466,9 @@ function slide(event) {
 
     //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
+    event.stopPropagation();
     let target = event.target;
+
     if(event.target.id.includes('~')) {
       target = document.getElementById(event.target.id.split('~')[0]);
     }
@@ -487,6 +498,7 @@ function add(event) {
 
     //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
+    event.stopPropagation();
     let target = event.target;
     if(event.target.id.includes('~')) {
       target = document.getElementById(event.target.id.split('~')[0]);
@@ -516,6 +528,7 @@ function subtract(event) {
 
     //rate = parseDouble(document.getElementById('rate').innerHTML);
     event.preventDefault();
+    event.stopPropagation();
     let target = event.target;
     if(event.target.id.includes('~')) {
       target = document.getElementById(event.target.id.split('~')[0]);
@@ -538,24 +551,32 @@ function subtract(event) {
         checkAll();
     }, 750);
     target.setAttribute('checkTimeoutId', timeoutId);
+    return false;
 }
 //------------- Out of Control, Sorry ---------------
+const rings = ['ring_1','ring_2','ring_3','ring_4']
 
+function attachClicks(id) {
+  document.getElementById(id).addEventListener('click', add, false);
+  document.getElementById(id).addEventListener('contextmenu', subtract, false);
+}
+
+function attachScroll(id) {
+  document.getElementById(id).addEventListener('wheel', slide);
+}
 
 function startGame() {
-
-
   gameState.useSound = document.getElementById('useSound').checked;
   gameState.useMusic = document.getElementById('useMusic').checked;
   gameState.useClickInsteadOfScroll = document.getElementById('useClick').checked;
   document.getElementById('menu-holder').style.display = 'none';
   document.getElementById('game-holder').style.display = 'block';
+
   if(gameState.useClickInsteadOfScroll) {
-    document.getElementById('ring_1').onclick = add;
-    document.getElementById('ring_1').addEventListener('contextmenu', subtract, false);
-  } else {
-    document.getElementById('ring_1').onwheel = slide;
+    rings.forEach(attachClicks);
   }
+  rings.forEach(attachScroll);
+
   beginCountdown();
   // Track idle time?
   // Show Depth Tracker?
@@ -649,12 +670,16 @@ function beginCircle() {
     gameState.circles.push(circle);
   }
   document.getElementById("ring_1").setAttribute("targetval",circle.ring1goal);
+  document.getElementById("ring_1").style.pointerEvents = 'auto';
   document.getElementById("ring_1~guide_graphic").src = 'assets/'+circle.ring1goal + 'g.svg';
   document.getElementById("ring_2").setAttribute("targetval",circle.ring2goal);
+  document.getElementById("ring_2").style.pointerEvents = 'auto';
   document.getElementById("ring_2~guide_graphic").src = 'assets/'+circle.ring2goal + 'g.svg';
   document.getElementById("ring_3").setAttribute("targetval",circle.ring3goal);
+  document.getElementById("ring_3").style.pointerEvents = 'auto';
   document.getElementById("ring_3~guide_graphic").src = 'assets/'+circle.ring3goal + 'g.svg';
   document.getElementById("ring_4").setAttribute("targetval",circle.ring4goal);
+  document.getElementById("ring_4").style.pointerEvents = 'auto';
   document.getElementById("ring_4~guide_graphic").src = 'assets/'+circle.ring4goal + 'g.svg';
 }
 
@@ -664,8 +689,11 @@ function check(element) {
     if(curval === target) {
         element.style.color = solvedColor;
         element.style.backgroundColor = solvedColor;
-        element.setAttribute('right',true);
-        playSound(clackSound);
+        if(element.getAttribute('right').endsWith('false')) {
+          element.setAttribute('right',true);
+          //element.style.pointerEvents = 'none';
+          playSound(clackSound);
+        }
     } else {
         element.style.color = unsolvedColor;
         element.style.backgroundColor = unsolvedColor;

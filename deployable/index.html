@@ -1,7 +1,7 @@
 <html>
 <head>
 <style>
-:root {
+  :root {
     --gold: #FFD700;
     --blood: #880808;
     --wood: #867342;
@@ -13,142 +13,140 @@
     --radial-difference-half: calc(var(--radial-difference) / 2);
     --top-base: 0px;
     --left-base: 0px;
-}
-::backdrop {
-  background-color: gray;
-  opacity: 0.95;
-}
-.choice-button-holder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+  }
+  ::backdrop {
+    background-color: gray;
+    opacity: 0.95;
+  }
+  .choice-button-holder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-.menu-container {
+  .menu-container {
     background-color:white;
-        height: var(--container-height);
-        width: var(--container-width);
-        position: absolute;
-        top: var(--top-base);
-        left:var(--left-base);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.menu-presenter {
-  display:block;
-  justify-content:center;
-  align-items:center;
-}
-
-.container {
     height: var(--container-height);
     width: var(--container-width);
     position: absolute;
     top: var(--top-base);
     left:var(--left-base);
-}
-.ring-inner { /* background-color: black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .menu-presenter {
+    display:block;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .container {
+    height: var(--container-height);
+    width: var(--container-width);
+    position: absolute;
+    top: var(--top-base);
+    left:var(--left-base);
+  }
+  .ring-inner { /* background-color: black; */
     background-color: var(--blood);
     border-radius: 50%;
     position: absolute;
     margin: var(--radial-difference-half);
     top: var(--top-base);
     left: var(--left-base);
-
-}
-.ring {
+  }
+  .ring {
     background-color: black;
     border-radius: 50%;
     position: absolute;
     margin: var(--radial-difference-half);
     top: var(--top-base);
     left: var(--left-base);
-}
-.ring-one {
+  }
+  .ring-one {
     height: calc(var(--container-height) - var(--radial-difference));
     width: calc(var(--container-width) - var(--radial-difference));
-}
-
-.ring-inner-one {
+  }
+  .ring-inner-one {
     height: calc(var(--container-height) - calc( 2 * var(--radial-difference)));
     width: calc(var(--container-width) - calc( 2 * var(--radial-difference)));
-}
-.ring-two {
+  }
+  .ring-two {
     height: calc(var(--container-height) - calc( 3 * var(--radial-difference)));
     width:  calc(var(--container-width) - calc( 3 * var(--radial-difference)));
-
-}
-.ring-inner-two {
+  }
+  .ring-inner-two {
     height:  calc(var(--container-height) - calc( 4 * var(--radial-difference)));
     width:  calc(var(--container-height) - calc( 4 * var(--radial-difference)));
-}
-.ring-three {
+  }
+  .ring-three {
     height: calc(var(--container-height) - calc( 5 * var(--radial-difference)));
     width:  calc(var(--container-width) - calc( 5 * var(--radial-difference)));
-
-}
-.ring-inner-three {
+  }
+  .ring-inner-three {
     height:  calc(var(--container-height) - calc( 6 * var(--radial-difference)));
     width:  calc(var(--container-height) - calc( 6 * var(--radial-difference)));
-}
-.ring-four {
+  }
+  .ring-four {
     height: calc(var(--container-height) - calc( 7 * var(--radial-difference)));
     width:  calc(var(--container-width) - calc( 7 * var(--radial-difference)));
-
-}
-.ring-inner-four {
+  }
+  .ring-inner-four {
     height:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
     width:  calc(var(--container-height) - calc( 8 * var(--radial-difference)));
-}
-
+  }
 
 </style>
 <script>
-// Some global quick functions. Heavy stuff is at the bottom.
+  // Some global quick functions. Heavy stuff is at the bottom.
 
-function makeBetweenTwoAndSixteen(val) {
-  return parseInt(Math.min(16, Math.max(val,2)));
-}
+  function makeBetweenTwoAndSixteen(val) {
+    return parseInt(Math.min(16, Math.max(val,2)));
+  }
 
-function showHowToPlay() {
-  document.getElementById('hideable-menu-content').style.display = 'none';
-  document.getElementById('game-rules').style.display = 'block';
-}
-function showMenuFromRules() {
-  document.getElementById('hideable-menu-content').style.display = 'block';
-  document.getElementById('game-rules').style.display = 'none';
-}
-function showDeveloperCommentary() {
-  document.getElementById('hideable-menu-content').style.display = 'none';
-  document.getElementById('developer-commentary').style.display = 'block';
-}
-function showMenuFromDeveloperCommentary() {
-  document.getElementById('hideable-menu-content').style.display = 'block';
-  document.getElementById('developer-commentary').style.display = 'none';
-}
-function showChoiceButtons() {
-  document.getElementById('choice-button-holder').style.display = 'block';
-}
-function hideChoiceButtons() {
-  document.getElementById('choice-button-holder').style.display = 'none';
-}
+  function showHowToPlay() {
+    document.getElementById('hideable-menu-content').style.display = 'none';
+    document.getElementById('game-rules').style.display = 'block';
+  }
+  function showMenuFromRules() {
+    document.getElementById('hideable-menu-content').style.display = 'block';
+    document.getElementById('game-rules').style.display = 'none';
+  }
+  function showDeveloperCommentary() {
+    document.getElementById('hideable-menu-content').style.display = 'none';
+    document.getElementById('developer-commentary').style.display = 'block';
+  }
+  function showMenuFromDeveloperCommentary() {
+    document.getElementById('hideable-menu-content').style.display = 'block';
+    document.getElementById('developer-commentary').style.display = 'none';
+  }
+  function showChoiceButtons() {
+    document.getElementById('choice-button-holder').style.display = 'block';
+  }
+  function hideChoiceButtons() {
+    document.getElementById('choice-button-holder').style.display = 'none';
+  }
 </script>
-
 </head>
 <body style="background-color:gray;">
 <div id='menu-holder' class="menu-container">
   <div id='menu-presenter' class="menu-presenter">
     <div id='hideable-menu-content' style='display:block'>
       <h1>Circle Back</h1>
-      <h3>A Trash Captains/Piercing Arrow Production</h3>
+      <h3>A Trash Captains Production</h3>
       <p> For your consideration, an alchemy-themed mouse wheel game.</p>
-      <h3><a href="#" onclick="showHowToPlay()"> How to Play (WIP)</a></h3>
-      <h3 id="developerCommentaryButton" hidden><a href="#" onclick="showDeveloperCommentary()">Developer Commentary</a></h3>
-      <h3 hidden><a href="#" onclick="showSettings()"> Settings (NYI)</a></h3>
       <button onclick="startGame()"> Play </button>
+      <br>
+      <br>
+      <span><input id="useSound" type="checkbox" checked> Use Sound</span>
+      <br>
+      <span><input id="useMusic" type="checkbox" checked> Use Ambience</span>
+      <br>
+      <span><input id="useClick" type="checkbox"> Use Click instead of Scroll (NYI)</span>
+      <h3><a href="#" onclick="showHowToPlay()"> How to Play </a></h3>
+      <h3><a href="#" onclick="showDeveloperCommentary()">Credits and Thanks</a></h3>
     </div>
     <div id='game-rules' style='display:none; margin:50px;'>
     <p>This game is played by matching visual prompts shown in rings within other rings.
@@ -163,6 +161,15 @@ function hideChoiceButtons() {
     <a href="#" onclick="showMenuFromRules()">Return to Menu</a>
   </div>
     <div id='developer-commentary' style='display:none; margin:50px;'>
+      <h2>Credits</h2>
+      <ul>
+        <li>Sounds - Creative Commons content from <a target='_blank' href="https://sonniss.com/gameaudiogdc">Sonniss</a></li>
+        <li>Tools - vim and Pulsar Text Editors, <a target='_blank' href="https://svg-path-visualizer.netlify.app/">SVG Path Visualizer</a></li>
+        <li>Javascript timer function original credit to <a target='_blank' href="https://stackoverflow.com/questions/20318822/how-to-create-a-stopwatch-using-javascript">this stackoverflow post.</a></li>
+        <li>Everything else - Emily (me)</li>
+      </ul>
+      <br>
+      <h2>Developer Comments</h2>
     <p>Astute individuals might notice that this application includes no libraries or engine.
       While I could have tried to use an engine or relied on libraries to do clever
       and interesting things, I decided at the beginning to go with a minimal approach and
@@ -190,8 +197,17 @@ function hideChoiceButtons() {
 <div id='gamestate'></div>
 
 <div id='timerDisplay'></div>
-<dialog id="countdownDialog">Start in: <div id="countdownDisplay"></div></dialog>
-<dialog id="winDialog">Your Score: <span id="totalScore"></span></dialog>
+<!-- Dialogs -->
+  <dialog id="countdownDialog">Start in: <div id="countdownDisplay"></div></dialog>
+  <dialog id="winDialog">Your Score: <span id="totalScore"></span>
+    <br>
+    <a href="#" onclick="returnToMenu()">Menu</a>
+  </dialog>
+  <dialog id="loseDialog"> You Lose... Better luck next time!
+    <br>
+    <a href="#" onclick="returnToMenu()">Menu</a>
+  </dialog>
+<!-- /Dialogs -->
 
 <div id='ring_1' class="ring ring-one" curval=1 targetval=5 right=false ringnumber='1' >
   <img id="ring_1~graphic" src="assets/initial.svg"/>
@@ -226,6 +242,29 @@ function hideChoiceButtons() {
   </div>
 </div>
 <br/>
+<audio id="clack">
+  <source src="assets/sounds/smallClack.wav" type="audio/wav">
+</audio>
+<audio id="click">
+  <source src="assets/sounds/smallClick.wav" type="audio/wav">
+</audio>
+<audio id="alpha1m">
+  <source src="assets/sounds/110Hz_alpha_1m.wav" type="audio/wav">
+</audio>
+<audio id="beta1m">
+  <source src="assets/sounds/75Hz_beta_1m.wav" type="audio/wav">
+</audio>
+<audio id="pressure10s">
+  <source src="assets/sounds/pressureClock10s.wav" type="audio/wav">
+</audio>
+<audio id="ease">
+  <source src="assets/sounds/Ease.wav" type="audio/wav">
+</audio>
+<audio id="latch">
+  <source src="assets/sounds/Latch.wav" type="audio/wav">
+</audio>
+
+
 <script>
 //-------- Borrowed from StackOverflow and modified.
 var Timer = function(elem, options) {
@@ -237,6 +276,7 @@ var Timer = function(elem, options) {
 
   // default options
   options = options || {};
+  options.doTenSeconds = options.doTenSeconds || false;
   options.countdownFrom = options.countdownFrom || 60;
   options.delay = options.delay || 1;
 
@@ -272,9 +312,19 @@ var Timer = function(elem, options) {
   }
 
   function update() {
+    if(options.doTenSeconds) {
+      checkTenSecondsRemain();
+    }
     checkOutOfTime();
     clock += delta();
     render();
+  }
+
+  function checkTenSecondsRemain() {
+    if((options.countdownFrom - (clock/1000)) <= 10) {
+      options.tenSecondsCallback();
+      options.doTenSeconds = false;
+    }
   }
   function checkOutOfTime() {
     if((options.countdownFrom  - (clock / 1000)) <= 0) {
@@ -302,13 +352,67 @@ var Timer = function(elem, options) {
   // public API
   this.start = start;
   this.stop = stop;
+  this.reset = reset;
   this.getRemaining = getRemaining;
 };
 
-//-------
+//------- Thank you StackOverflow.
+
+//-------- Audio Managers
+//<audio id="clickIntoPlace">
+//  <source src="assets/"
+const clickSound = 'click';
+const clackSound = 'clack';
+const alphaMusic = 'alpha1m';
+const betaMusic = 'beta1m';
+const pressureMusic = 'pressure10s';
+const easeSound = 'ease';
+const latchSound = 'latch';
+const allAudio = [
+  clickSound,
+  clackSound,
+  alphaMusic,
+  betaMusic,
+  pressureMusic,
+  easeSound,
+  latchSound
+];
+
+function playSound(sound){
+  if(gameState.useSound){
+    document.getElementById(sound).volume = .5;
+    document.getElementById(sound).play();
+  }
+}
+function playMusic(music){
+  if(gameState.useMusic){
+    document.getElementById(music).volume = .5;
+    document.getElementById(music).play();
+  }
+}
+//Sound or music, since we don't have to break on settings.
+function stopAudio(audio) {
+  document.getElementById(audio).pause();
+  document.getElementById(audio).currentTime = 0;
+}
+
+function stopAllAudioElements() {
+  allAudio.forEach(stopAudio);
+}
+function playTenSecondsPressure() {
+  if(gameState.useMusic){
+    playMusic(pressureMusic);
+  }
+}
+
+//-------- Quiet Now.
+
+//--------- Game Manager Section. Sorry for the mess.
+
 let timeLimit = 60;
 let countIn = 5;
 let gameTimer;
+let countdown;
 
 let solvedColor = '#867342';
 let unsolvedColor = 'black';
@@ -319,19 +423,14 @@ let gameState = {
   hasWon: false,
   hasLost: false,
   isReturning: false,
-  circles: []
-};
-
-const gameStateInitial = {
-  circlesSolved: 0,
-  levelsDeep: 0,
-  hasWon: false,
-  hasLost: false,
-  isReturning: false,
+  useSound: true,
+  useMusic: true,
+  useClickInsteadOfScroll: false,
   circles: []
 };
 
 function doWin() {
+  stopAllAudioElements();
   gameState.hasWon = true;
   hideChoiceButtons();
   gameTimer.stop();
@@ -343,13 +442,32 @@ function doWin() {
   document.getElementById("totalScore").innerHTML = (totalScore * 100).toFixed(2);
 }
 
+function lose() {
+  stopAllAudioElements();
+  if(gameState.hasWon) {
+    return;
+  } else {
+    gameState.hasLost = true;
+    hideChoiceButtons();
+    gameTimer.stop();
+    document.getElementById("loseDialog").showModal();
+  }
+}
+
 function startGame() {
+  gameState.useSound = document.getElementById('useSound').checked;
+  gameState.useMusic = document.getElementById('useMusic').checked;
+  gameState.useClickInsteadOfScroll = document.getElementById('useClick');
   document.getElementById('menu-holder').style.display = 'none';
   document.getElementById('game-holder').style.display = 'block';
   beginCountdown();
-  // Track idle time
-  // Show Depth Tracker
+  // Track idle time?
+  // Show Depth Tracker?
   //
+}
+
+function returnToMenu() {
+  location.reload();
 }
 
 function goDeeper() {
@@ -359,23 +477,33 @@ function goDeeper() {
 }
 function goBack() {
   gameState.isReturning = true;
+  stopAudio(alphaMusic);
+  playMusic(betaMusic);
   hideChoiceButtons();
   beginCircle();
 }
 
 function beginCountdown() {
   document.getElementById("countdownDialog").showModal();
-  countdown = new Timer(document.getElementById('countdownDisplay'), {"delay":100, "countdownFrom":countIn, "zeroCallback":beginGame});
+  countdown = new Timer(document.getElementById('countdownDisplay'),
+    {"delay":100, "countdownFrom":countIn, "zeroCallback":beginGame});
+
   countdown.start();
 }
 
 function beginTimer() {
-  gameTimer = new Timer(document.getElementById('timerDisplay'), {"delay": 100, "countdownFrom":timeLimit, "zeroCallback":lose});
+  countdown.stop();
+  countdown.reset();
+  gameTimer = new Timer(document.getElementById('timerDisplay'),
+    {"delay": 100, "countdownFrom":timeLimit,
+    "doTenSeconds":true, "tenSecondsCallback":playTenSecondsPressure, "zeroCallback":lose});
+
   gameTimer.start();
 }
 
 function beginGame(){
   document.getElementById("countdownDialog").close();
+  playMusic(alphaMusic);
   beginTimer();
   beginCircle();
 }
@@ -413,6 +541,7 @@ function beginCircle() {
 
   let circle;
   if(gameState.isReturning) {
+    playSound(latchSound);
     circle = reverseCircle(gameState.circles.pop());
   } else {
     circle = {
@@ -433,20 +562,6 @@ function beginCircle() {
   document.getElementById("ring_4~guide_graphic").src = 'assets/'+circle.ring4goal + 'g.svg';
 }
 
-function showLoseMessage() {
-
-}
-
-function lose() {
-  if(gameState.hasWon) {
-    return;
-  } else {
-    showLoseMessage();
-  }
-}
-
-
-
 function check(element) {
     let target = element.getAttribute('targetval');
     let curval = element.getAttribute('curval');
@@ -454,10 +569,12 @@ function check(element) {
         element.style.color = solvedColor;
         element.style.backgroundColor = solvedColor;
         element.setAttribute('right',true);
+        playSound(clackSound);
     } else {
         element.style.color = unsolvedColor;
         element.style.backgroundColor = unsolvedColor;
         element.setAttribute('right',false);
+        playSound(clickSound);
     }
 
 }
@@ -486,6 +603,7 @@ function checkAll() {
           document.getElementById("returnButton").hidden = true;
         }
         showChoiceButtons();
+        playSound(easeSound);
       }
     }
 }

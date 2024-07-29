@@ -24,7 +24,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
+  div {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+  div > img {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+  div > p {
+    -webkit-user-select:auto; /* Safari */
+    -ms-user-select: auto; /* IE 10 and IE 11 */
+    user-select: auto; /* Standard syntax */
+  }
   .menu-container {
     background-color:white;
     height: var(--container-height);
@@ -56,7 +70,9 @@
     margin: var(--radial-difference-half);
     top: var(--top-base);
     left: var(--left-base);
-
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
   }
 
   .ring-inner > img {
@@ -169,16 +185,11 @@
       <h3><a href="#" onclick="showDeveloperCommentary()">Credits and Thanks</a></h3>
     </div>
     <div id='game-rules' style='display:none; margin:50px;'>
-    <p>This game is played by matching visual prompts shown in rings within other rings.
-    The idea is to match up the alchemical array to the guide marks and complete the array.
-    You then can choose whether to 'go deeper' or to score.
-    Beware, however, that going deeper into the abyss will require you to climb back out
-    by solving the arrays you solved on the way down in reverse order.
-
-    Your total score is a function of how much of your time you use, how many rings you complete,
-    and how well you use your time.
-    </p>
-    <a href="#" onclick="showMenuFromRules()">Return to Menu</a>
+      <img style='position:absolute;left:-15%;top:-20%;display:flex;scale:50%' src="assets/tutorialDiagram1.png"/>
+      <img style='position:absolute;left:20%;top:-20%;display:flex;scale:50%' src="assets/tutorialDiagram2.png"/>
+      <img style='position:absolute;left:45%;top:-20%;display:flex;scale:50%' src="assets/tutorialDiagram3.png"/>
+      <img style='position:absolute;top:30%;left:20%;display:flex;scale:50%' src="assets/tutorialDiagram4.png"/>
+    <a style='position:absolute;top:70%;left:65%;' href="#" onclick="showMenuFromRules()">Return to Menu</a>
   </div>
     <div id='developer-commentary' style='display:none; margin:50px;'>
       <h2>Credits</h2>
@@ -186,6 +197,7 @@
         <li>Sounds - Creative Commons content from <a target='_blank' href="https://sonniss.com/gameaudiogdc">Sonniss</a></li>
         <li>Tools - vim and Pulsar Text Editors, <a target='_blank' href="https://svg-path-visualizer.netlify.app/">SVG Path Visualizer</a></li>
         <li>Javascript timer function original credit to <a target='_blank' href="https://stackoverflow.com/questions/20318822/how-to-create-a-stopwatch-using-javascript">this stackoverflow post.</a></li>
+        <li>Mouse Icons for the tutorial images attribution: <a href="https://www.flaticon.com/free-icons/cursor" title="cursor icons">Cursor icons created by Pixel perfect - Flaticon</a></li>
         <li>Everything else - Emily (me)</li>
       </ul>
       <a href="#" onclick="showMenuFromDeveloperCommentary()">Return to Menu</a>

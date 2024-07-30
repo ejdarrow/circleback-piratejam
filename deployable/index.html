@@ -439,6 +439,7 @@ let gameState = {
   useSound: true,
   useMusic: true,
   useClickInsteadOfScroll: false,
+  checkAllTimeoutId:"",
   circles: []
 };
 
@@ -506,10 +507,10 @@ function slide(event) {
     }
     let timeoutId = setTimeout(function() {
         check(target);
-        target.setAttribute('checkTimeoutId', '');
+        gameState.checkAllTimeoutId = '';
         checkAll();
     }, 250);
-    target.setAttribute('checkTimeoutId', timeoutId);
+    gameState.checkAllTimeoutId = timeoutId;
 }
 
 //Add 1 to ring on left click.
@@ -537,10 +538,10 @@ function add(event) {
     }
     let timeoutId = setTimeout(function() {
         check(target);
-        target.setAttribute('checkTimeoutId', '');
+        gameState.checkAllTimeoutId = '';
         checkAll();
     }, 250);
-    target.setAttribute('checkTimeoutId', timeoutId);
+    gameState.checkAllTimeoutId = timeoutId;
 }
 //Subtract 1 from ring on right click.
 function subtract(event) {
@@ -567,10 +568,10 @@ function subtract(event) {
     }
     let timeoutId = setTimeout(function() {
         check(target);
-        target.setAttribute('checkTimeoutId', '');
+        gameState.checkAllTimeoutId = '';
         checkAll();
     }, 250);
-    target.setAttribute('checkTimeoutId', timeoutId);
+    gameState.checkAllTimeoutId = timeoutId;
     return false;
 }
 //------------- Out of Control, Sorry ---------------

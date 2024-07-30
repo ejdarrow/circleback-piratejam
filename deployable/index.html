@@ -214,7 +214,7 @@
 
 <!-- Dialogs -->
   <dialog id="countdownDialog">Start in: <div id="countdownDisplay"></div></dialog>
-  <dialog id="winDialog">Your Score: <span id="totalScore"></span>
+  <dialog id="winDialog"><div id="scoreReport"></div>
     <br>
     <a href="#" onclick="returnToMenu()">Menu</a>
   </dialog>
@@ -449,11 +449,19 @@ function doWin() {
   gameTimer.stop();
   let timeRemaining = gameTimer.getRemaining();
   let timeUsed = timeLimit - timeRemaining;
-  let timeUsedPercent = timeLimit/timeUsed;
-  let totalScore = timeUsedPercent * gameState.circlesSolved;
+  let timeUsedPercent = timeUsed/timeLimit;
+  let totalScore = (timeUsedPercent * gameState.circlesSolved * 100).toFixed(2);
   document.getElementById("winDialog").showModal();
   // TODO: Compose detailed score report
-  document.getElementById("totalScore").innerHTML = (totalScore * 100).toFixed(2);
+
+  let scoreReport = "Score Report:\n";
+  scoreReport = scoreReport + "Time Used: " + timeUsed.toFixed(2) + " seconds<br/>";
+  scoreReport = scoreReport + "Time Remaining: " + timeRemaining + " seconds<br/>";
+  scoreReport = scoreReport + "Percent of Time Used: " + (timeUsedPercent * 100).toFixed(2) + "%<br/>";
+  scoreReport = scoreReport + "Number of Circles Solved: " + gameState.circlesSolved + "<br/>";
+  scoreReport = scoreReport + "Total Score = (Percent Time Used * Number of Circles Solved) <br/>";
+  scoreReport = scoreReport + "<strong> Total Score: " + totalScore + "</strong>";
+  document.getElementById("scoreReport").innerHTML = scoreReport;
 }
 
 function lose() {
@@ -500,7 +508,7 @@ function slide(event) {
         check(target);
         target.setAttribute('checkTimeoutId', '');
         checkAll();
-    }, 750);
+    }, 250);
     target.setAttribute('checkTimeoutId', timeoutId);
 }
 
@@ -531,7 +539,7 @@ function add(event) {
         check(target);
         target.setAttribute('checkTimeoutId', '');
         checkAll();
-    }, 750);
+    }, 250);
     target.setAttribute('checkTimeoutId', timeoutId);
 }
 //Subtract 1 from ring on right click.
@@ -561,7 +569,7 @@ function subtract(event) {
         check(target);
         target.setAttribute('checkTimeoutId', '');
         checkAll();
-    }, 750);
+    }, 250);
     target.setAttribute('checkTimeoutId', timeoutId);
     return false;
 }
